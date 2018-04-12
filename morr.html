@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+
+        #box{
+            width:400px;
+            height:225px;
+            position: relative;
+            border:20px solid #000;
+        }
+        #box img{
+            width:100%;
+            height:100%;
+            display: block;
+        }
+
+        #fdj{
+            width:80px;
+            height:80px;
+            position: absolute;
+            left:0;
+            top:0;
+            background-color: rgba(255,255,255,.4);
+        }
+
+        #fdj-3x{
+            width:240px;
+            height:240px;
+            border:1px solid #000;
+            position: absolute;
+            right:-280px;
+            top:0px;
+            overflow: hidden;
+        }
+        #fdj-3x img{
+            width:1200px;
+            height:675px;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div id="box">
+    <img width="" src="1.jpg" alt="">
+    <div id="fdj"></div>
+    <div id="fdj-3x">
+        <img src="1.jpg" alt="">
+    </div>
+</div>
+
+
+<script>
+
+    /*
+    * 1. 让放大镜在图片框中动起来
+    *
+    *
+    *
+    * */
+
+    var fdj = document.querySelector('#fdj');
+    var box = document.querySelector('#box');
+    var img = document.querySelector('#fdj-3x img');
+
+
+    box.onmousemove = function(ev){
+
+        var ev = ev||event;
+
+        //获取鼠标所在的位置
+        var x = ev.clientX-box.offsetLeft-box.clientLeft-fdj.offsetWidth/2;
+        var y = ev.clientY-box.offsetTop-box.clientTop-fdj.offsetHeight/2;
+
+        //边界处理
+        if(x<0){
+            x = 0;
+        }
+        if(x>box.clientWidth-fdj.offsetWidth){
+            x = box.clientWidth-fdj.offsetWidth;
+        }
+
+        if(y<0){
+            y = 0;
+        }
+        if(y>box.clientHeight-fdj.offsetHeight){
+            y = box.clientHeight-fdj.offsetHeight;
+        }
+
+
+        fdj.style.left = x+'px';
+        fdj.style.top = y+'px';
+
+
+        //移动被放大的图片 以便显示出对应的位置
+        var l = img.offsetWidth * (x/box.clientWidth);
+        var t = img.offsetHeight * (y/box.clientHeight);
+
+
+        img.style.marginLeft = -l+'px';
+        img.style.marginTop = -t+'px';
+
+
+    };
+
+
+
+
+</script>
+
+</body>
+</html>
